@@ -14,7 +14,7 @@ class Reservations:
 
         reservations_instance = Reservations()
 
-        with open(filename, 'r', encoding='utf-8-sig') as file:
+        with open(filename, 'r', encoding='utf-8-sig') as file:  # Populate hash map with zip codes
             reader = csv.reader(file)
             for row in reader:
                 if row and len(row) > column_index:
@@ -30,13 +30,13 @@ class Reservations:
 
 
 def main():
-    header1 = print("BASEBALL FIELD RESERVATION SYSTEM")
+    header1 = print("\nBASEBALL FIELD RESERVATION SYSTEM")
     header2 = print("-------------------------------------------------")
     print("ENTER THE CHICAGO ZIP CODE YOU WOULD LIKE TO SEARCH")
     print("For information on Chicago zip codes type 'help' or, to quit, type 'stop'\n")
     reservations_instance = Reservations.read_reservations_from_file()
 
-    zip_code = input("Enter ZIP code: ")
+    zip_code = input("Enter ZIP code: \n")
     if zip_code == 'stop':
         return
     elif zip_code == 'help':
@@ -51,11 +51,21 @@ def main():
                 if len(row) > column_index:
                     print(row[column_index])
         main()
-    elif zip_code not in reservations_instance.get_reservations():
+    if zip_code in reservations_instance.get_reservations():
+        name = input("What is the name for the reservation?\n")
+        
+
+        main()
+    
+    else:
         print("Invalid zip code")
         main()
 
 if __name__ == '__main__':
     main()
+
+    reservation_instance = Reservations.read_reservations_from_file()
+
+    print(reservation_instance.get_reservations())
 
     
