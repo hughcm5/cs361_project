@@ -5,6 +5,7 @@ class Reservations:
         self.reservations = {}
 
     def update_reservation(self, zip_code, reservation_info):
+        # Update reservations dictionary with the new reservation info
         self.reservations[zip_code] = reservation_info
 
     @staticmethod
@@ -24,6 +25,10 @@ class Reservations:
 
     def get_reservations(self):
         return self.reservations
+    
+    def get_reservation_info(self, zip_code):
+        # Retrieve reservation info for a specified zip code
+        return self.reservations.get(zip_code, None)
 
 
 
@@ -37,8 +42,12 @@ def main():
     reservations_instance = Reservations.read_reservations_from_file()
 
     zip_code = input("Enter ZIP code: \n")
+
+    # STOP PROGRAM
     if zip_code == 'stop':
         return
+    
+    # SHOW USER ZIP CODES  
     elif zip_code == 'help':
         csv_zipcodes = 'zip_codes.csv'
         column_index = 0
@@ -51,11 +60,24 @@ def main():
                 if len(row) > column_index:
                     print(row[column_index])
         main()
-    if zip_code in reservations_instance.get_reservations():
-        name = input("What is the name for the reservation?\n")
-        
 
-        main()
+    if zip_code in reservations_instance.get_reservations():
+        print("\n To start over type 'back'.\n")
+        name = input("What is the name for the reservation? ")
+        if name != 'back':   # Backtrack 
+            park = input("Which park do you want to reserve? ")
+            if park == 'back':
+                main()
+        if name == 'back':
+            main()
+
+        reservation_info = [name, park]
+
+        # Add park to Zip Code
+        reservations_instance.update_reservation(zip_code, reservation_info)
+        #print(reservations_instance.get_reservation_info(zip_code))
+
+        print("Okay, " + name + ", you have reserved a field at " + park + " Chicago, IL " + zip_code)
     
     else:
         print("Invalid zip code")
@@ -66,6 +88,6 @@ if __name__ == '__main__':
 
     reservation_instance = Reservations.read_reservations_from_file()
 
-    print(reservation_instance.get_reservations())
+    #print(reservation_instance.get_reservations())
 
     
