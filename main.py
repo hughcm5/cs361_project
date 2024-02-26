@@ -15,7 +15,7 @@ class Reservations:
 
         reservations_instance = Reservations()
 
-        with open(filename, 'r', encoding='utf-8-sig') as file:  # Populate hash map with zip codes
+        with open(filename, 'r', encoding='utf-8-sig') as file:  # Populate dictionary with zip codes
             reader = csv.reader(file)
             for row in reader:
                 if row and len(row) > column_index:
@@ -100,6 +100,6 @@ if __name__ == '__main__':
 
     reservation_instance = Reservations.read_reservations_from_file()
 
-    #print(reservation_instance.get_reservations())
+    print(reservation_instance.get_reservations())
 
     
