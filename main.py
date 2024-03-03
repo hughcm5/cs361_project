@@ -60,13 +60,13 @@ def main():
             for row in reader:
                 if len(row) > column_index:
                     print(row[column_index])
-        main()
+        main()   # Prompts user again
 
     if zip_code in reservations_instance.get_reservations():
         print("\n To start over type 'back'.\n")
         name = input("What is the name for the reservation? ")
         if name != 'back':   # Backtrack 
-            park = input("Which park do you want to reserve? ")
+            park = input("Which park would you like to reserve? ")
             if park == 'back':
                 main()
         if name == 'back':
