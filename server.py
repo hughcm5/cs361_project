@@ -26,10 +26,10 @@ def create_parks_dictionary(csv_file):
             num_baseball_fields = int(row['SUM'])
 
             if zip_code not in parks_dict:
-                parks_dict[zip_code] = {'parks': [], 'data': {}}
+                parks_dict[zip_code] = {'parks': [], 'fields': {}}
 
             if park_name not in parks_dict[zip_code]['parks']:
-                parks_dict[zip_code]['data'][park_name] = num_baseball_fields
+                parks_dict[zip_code]['fields'][park_name] = num_baseball_fields
 
 
     return parks_dict
@@ -39,10 +39,10 @@ csv_file_path = 'park_data.csv'
 parks_dictionary = create_parks_dictionary(csv_file_path)
 
 
-for zip_code, data in parks_dictionary.items():
+for zip_code, fields in parks_dictionary.items():
     print("ZIP Code: ", zip_code)
     #print("Park: ", data['parks'])
-    print("Data: ", data['data'])
+    print("Parks: ", fields['fields'])
     print()
 
 
