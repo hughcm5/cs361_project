@@ -40,23 +40,16 @@ class Storage:
 
 
 class Reservations:
-
-    def __init__(self) -> None:
+    def __init__(self, storage) -> None:
         self._valid = True
-
+        self.storage = storage
 
     def make_reservation(self, zip_code, park):
         """
         Searches for park by zip code and park name.
-
         Decrements field amount if zip code and park are valid 
         """
-        storage = Storage()
-
-        storage.create_parks_dictionary()
-
-        park_data = storage.get_park_dict()
-        print("Park data:", park_data)
+        park_data = self.storage.get_park_dict()
 
         # Check if the zip code exists in the park data
         if zip_code in park_data:
@@ -66,24 +59,30 @@ class Reservations:
             if park in parks_dict:
                 print("Park found:", park)
                 # Decrement the field amount for the park by 1
-                parks_dict[park] -= 1
-                print("Reservation made for", park)
-                self._valid = True
+                if parks_dict[park] != 0:
+                    parks_dict[park] -= 1
+                    print("Reservation made for", park)
+                    self._valid = True
+                else:
+                    print("Park has no fields left to reserve")
+                    self._valid = False
             else:
                 print("Park not found in zip code:", zip_code)
                 self._valid = False
         else:
             print("Zip code not found:", zip_code)
             self._valid = False
-        
 
     def get_valid(self):
         return self._valid
 
 
 
+
 def main():
-    
+    """
+    Makes connection to client and creates the reservation
+    """
     context = zmq.Context()
 
     socket = context.socket(zmq.REP)
@@ -91,36 +90,31 @@ def main():
 
     print("Server running") # Check if server is running
 
-    while True:
-        reservations = Reservations()
-        storage = Storage()
+    # Create parks dictionary before starting the loop
+    storage = Storage()
+    storage.create_parks_dictionary()
 
+    while True:
+        reservations = Reservations(storage)
 
         # Receive data from client
         data = socket.recv_json()
-        
 
         # Get first and second items of list
         zip_code = data[0]
-        print(zip_code)
         park = data[1]
-        print(park)
 
+        # Creates reservation
         reservations.make_reservation(zip_code,park)
 
+        # get_valid True if field is available and park + zip code exists
         if reservations.get_valid() is True:
             result_str = "Reservation Successful!"
-            storage.create_parks_dictionary()
-            print(storage.get_park_dict())
         else:
             result_str = "Reservation Unsuccessful."
 
-
         # Send back to client
-        # Maybe enclose this with if statement checking to see if reservation was sucessful
-        # True/False
         socket.send_string(result_str)
 
 if __name__ == "__main__":
     main()
-
