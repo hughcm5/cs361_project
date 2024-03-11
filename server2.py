@@ -74,6 +74,9 @@ class Reservations:
             self._valid = False
 
     def get_valid(self):
+        """
+        Returns if self._valid is true or not
+        """
         return self._valid
 
 
