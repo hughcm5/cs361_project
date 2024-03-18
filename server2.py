@@ -17,7 +17,7 @@ class Storage:
         """
         self.parks_dict = parks_dict
 
-    def create_parks_dictionary(self):
+    def create_parks_dictionary(self) -> None:
         """
         Creates dictionary to store parks and fields in each zip code
         """
@@ -44,7 +44,7 @@ class Reservations:
         self._valid = True
         self.storage = storage
 
-    def make_reservation(self, zip_code, park):
+    def make_reservation(self, zip_code, park) -> bool:
         """
         Searches for park by zip code and park name.
         Decrements field amount if zip code and park are valid 
