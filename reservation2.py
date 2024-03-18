@@ -2,19 +2,36 @@ import zmq
 import csv
 import time
 
+def ascii_title():
+    windycity = """
+     _    _ _           _       _____ _ _          ______ _____ _____ 
+    | |  | (_)         | |     /  __ (_) |         | ___ \  ___/  ___|
+    | |  | |_ _ __   __| |_   _| /  \/_| |_ _   _  | |_/ / |__ \ `--. 
+    | |/\| | | '_ \ / _` | | | | |   | | __| | | | |    /|  __| `--. \
+    \  /\  / | | | | (_| | |_| | \__/\ | |_| |_| | | |\ \| |___/\__/ /
+     \/  \/|_|_| |_|\__,_|\__, |\____/_|\__|\__, | \_| \_\____/\____/ 
+                           __/ |             __/ |                    
+                          |___/             |___/ 
+        """
+    return windycity
+
 def display_header():
     """
     Display CLI headers
     """
-    print("\nBASEBALL FIELD RESERVATION SYSTEM -- RESERVE A FIELD IN LESS THAN A MINUTE")
+    ascii_title()
+    print("\nRESERVE A FIELD FOR FREE IN LESS THAN A MINUTE")
     print("-------------------------------------------------")
+    print("For information on Chicago zip codes and information on the service type 'help' or, to quit, type 'stop' and hit enter\n")
     print("ENTER THE CHICAGO ZIP CODE YOU WOULD LIKE TO SEARCH")
-    print("For information on Chicago zip codes type 'help' or, to quit, type 'stop'\n")
 
 def zip_code_reader():
     """
-    Display zip codes availible
+    Display zip codes availible and information on service
     """
+    print("Welcome to WindyCity Reservations! This service is designed to make reserving baseball diamonds in Chicago easier than ever!")
+    print("Enter the zip code and the park name below to reserve a field")
+
     with open('zip_codes.csv', 'r') as file:
         csv_reader = csv.reader(file)
 

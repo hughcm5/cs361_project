@@ -79,9 +79,6 @@ class Reservations:
         """
         return self._valid
 
-
-
-
 def main():
     """
     Makes connection to client and creates the reservation
